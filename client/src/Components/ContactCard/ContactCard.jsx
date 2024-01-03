@@ -19,7 +19,7 @@ const ContactCard = ({ _id, info, imageUrl, deleteItem }) => {
       address,
     };
 
-    fetch(`http://localhost:5000/contact/${_id}`, {
+    fetch(`https://server-sigma-olive.vercel.app/contact/${_id}`, {
       method: "PUT",
       headers: { "content-type": "application/json" },
       body: JSON.stringify(info),

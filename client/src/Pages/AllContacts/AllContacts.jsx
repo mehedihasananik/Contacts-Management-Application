@@ -10,7 +10,7 @@ const AllContacts = () => {
   const deleteItem = (id) => {
     const proceed = confirm("are you sure");
     if (proceed) {
-      fetch(`http://localhost:5000/contact/${id}`, {
+      fetch(`https://server-sigma-olive.vercel.app/contact/${id}`, {
         method: "DELETE",
       })
         .then((response) => response.json())
@@ -28,7 +28,9 @@ const AllContacts = () => {
   // fetching contacts
   const fetchData = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/contact");
+      const response = await axios.get(
+        "https://server-sigma-olive.vercel.app/contact"
+      );
       setContacts(response.data);
     } catch (error) {
       console.error(error);

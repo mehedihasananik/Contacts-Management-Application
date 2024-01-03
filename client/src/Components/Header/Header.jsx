@@ -11,13 +11,13 @@ const Header = () => {
       <div className="flex-none">
         <ul className="menu menu-horizontal px-1">
           <li>
-            <Link to="/AddContacts">
-              <a className="text-sm md:text-lg font-medium">Add Contacts</a>
+            <Link className="text-sm md:text-lg font-medium" to="/AddContacts">
+              Add Contacts
             </Link>
           </li>
           <li>
-            <Link to="/AllContacts">
-              <a className="text-sm md:text-lg font-medium">All Contacts</a>
+            <Link className="text-sm md:text-lg font-medium" to="/AllContacts">
+              All Contacts
             </Link>
           </li>
         </ul>

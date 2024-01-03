@@ -31,7 +31,7 @@ const AddContacts = () => {
       .then((res) => res.json())
       .then((imageData) => {
         const imageUrl = imageData.data.display_url;
-        fetch("http://localhost:5000/contact", {
+        fetch("https://server-sigma-olive.vercel.app/contact", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
