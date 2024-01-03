@@ -1,6 +1,3 @@
-import { Link } from "react-router-dom";
-
-import { FcGoogle } from "react-icons/fc";
 import toast from "react-hot-toast";
 
 const AddContacts = () => {
@@ -46,6 +43,7 @@ const AddContacts = () => {
             console.log(data);
             if (data.success === true) {
               toast.success(`You have successfully submitted the form`);
+              form.reset();
             } else {
               toast.error("You already have an appoinment");
             }
@@ -57,8 +55,8 @@ const AddContacts = () => {
 
   return (
     // adding contact
-    <div className="flex justify-center items-center min-h-screen">
-      <div className="flex flex-col max-w-md p-6 rounded-md sm:p-10 bg-gray-100 text-gray-900">
+    <div className="flex justify-center items-center md:min-h-screen overflow-hidden">
+      <div className="flex flex-col  w-[350px] md:w-[500px] p-10 rounded-md md:p-14 bg-gray-100 text-gray-900">
         {/* title & description started */}
         <div className="mb-8 text-center">
           <h1 className="my-3 text-4xl font-bold">Add Contact</h1>
@@ -86,6 +84,7 @@ const AddContacts = () => {
                 placeholder="Enter Your Name Here"
                 className="w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-rose-500 bg-gray-200 text-gray-900"
                 data-temp-mail-org="0"
+                required
               />
             </div>
 
@@ -114,6 +113,7 @@ const AddContacts = () => {
                 placeholder="Enter Your Phone Number"
                 className="w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-rose-500 bg-gray-200 text-gray-900"
                 data-temp-mail-org="0"
+                required
               />
             </div>
             <div>
@@ -127,6 +127,7 @@ const AddContacts = () => {
                 placeholder="Enter Your Address Here"
                 className="w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-rose-500 bg-gray-200 text-gray-900"
                 data-temp-mail-org="0"
+                required
               />
             </div>
             <div>
@@ -134,11 +135,11 @@ const AddContacts = () => {
                 Select Image:
               </label>
               <input
-                required
                 type="file"
                 id="image"
                 name="image"
                 accept="image/*"
+                required
               />
             </div>
           </div>
@@ -148,32 +149,10 @@ const AddContacts = () => {
               type="submit"
               className="bg-rose-500 w-full rounded-md py-3 text-white"
             >
-              Continue
+              Create Contact
             </button>
           </div>
         </form>
-        <div className="flex items-center pt-4 space-x-1">
-          <div className="flex-1 h-px sm:w-16 dark:bg-gray-700"></div>
-          <p className="px-3 text-sm dark:text-gray-400">
-            Signup with social accounts
-          </p>
-          <div className="flex-1 h-px sm:w-16 dark:bg-gray-700"></div>
-        </div>
-        <div className="flex justify-center items-center space-x-2 border m-3 p-2 border-gray-300 border-rounded cursor-pointer">
-          <FcGoogle size={32} />
-
-          <p>Continue with Google</p>
-        </div>
-        <p className="px-6 text-sm text-center text-gray-400">
-          Already have an account?{" "}
-          <Link
-            to="/login"
-            className="hover:underline hover:text-rose-500 text-gray-600"
-          >
-            Login
-          </Link>
-          .
-        </p>
       </div>
     </div>
   );
