@@ -4,7 +4,33 @@ import Modal from "../Modal/Modal";
 const ContactCard = ({ _id, info, imageUrl, deleteItem }) => {
   const modalRef = useRef(null);
 
-  const handleSubmit = (e) => {};
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const name = form.name.value;
+    const email = form.email.value;
+    const phone = form.phone.value;
+    const address = form.address.value;
+    const info = {
+      name,
+      email,
+      phone,
+      address,
+    };
+
+    fetch(`http://localhost:5000/contact/${_id}`, {
+      method: "PUT",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify(info),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        if (data.modifiedCount > 0) {
+          alert("updated successfully");
+        }
+      });
+  };
 
   return (
     <div className="card w-96 bg-base-100 shadow-xl">
@@ -66,19 +92,6 @@ const ContactCard = ({ _id, info, imageUrl, deleteItem }) => {
                       required
                     />
                   </div>
-
-                  <div className="form-control">
-                    <label className="label">
-                      <span className="label-text">Your Address </span>
-                    </label>
-                    <input
-                      name="address"
-                      type="text"
-                      placeholder="Your Address"
-                      className="input input-bordered"
-                      required
-                    />
-                  </div>
                   <div className="form-control">
                     <label className="label">
                       <span className="label-text">Phone Number</span>
@@ -89,6 +102,33 @@ const ContactCard = ({ _id, info, imageUrl, deleteItem }) => {
                       placeholder="Phone Number"
                       className="input input-bordered"
                       required
+                      defaultValue={info.phone}
+                    />
+                  </div>
+                  <div className="form-control">
+                    <label className="label">
+                      <span className="label-text">Your Address </span>
+                    </label>
+                    <input
+                      name="address"
+                      type="text"
+                      placeholder="Your Address"
+                      className="input input-bordered"
+                      required
+                      defaultValue={info.address}
+                    />
+                  </div>
+                  <div className="form-control">
+                    <label className="label">
+                      <span className="label-text">Image </span>
+                    </label>
+                    <input
+                      name="image"
+                      type="image"
+                      placeholder="Your Image"
+                      className="input input-bordered"
+                      required
+                      defaultValue={imageUrl}
                     />
                   </div>
 

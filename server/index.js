@@ -28,18 +28,15 @@ const client = new MongoClient(uri, {
 async function run() {
   try {
     const contactCollection = client.db('contactManagement').collection('contacts')
-    const AllContactCollection = client.db('contactManagement').collection('allContacts')
 
-
+    // get all contacts
     app.get("/contact", async (req, res) => {
       const data = contactCollection.find();
       const result = await data.toArray();
       res.send(result);
     });
 
-
-
-
+    // create contact
     app.post("/contact", async (req, res) => {
       const data = req.body;
       const query = { data };
@@ -59,6 +56,23 @@ async function run() {
       res.send(user);
     });
 
+    // update contact
+    app.put("/contact/:id", async (req, res) => {
+      const id = req.params.id;
+      const info = req.body;
+      const filter = { _id: new ObjectId(id) };
+      const options = { upsert: true };
+      const updateDoc = {
+        $set: {
+          info
+        },
+      };
+      const result = await contactCollection.updateOne(filter, updateDoc, options);
+      res.send(result);
+      console.log(id, info);
+    });
+
+    // delete contact
     app.delete("/contact/:id", async (req, res) => {
       const id = req.params.id;
       console.log("delete from", id);
@@ -68,23 +82,22 @@ async function run() {
     });
 
 
-
     // Send a ping to confirm a successful connection
     await client.db('admin').command({ ping: 1 })
     console.log(
       'Pinged your deployment. You successfully connected to MongoDB!'
     )
   } finally {
-    // Ensures that the client will close when you finish/error
+
     // await client.close();
   }
 }
 run().catch(console.dir)
 
 app.get('/', (req, res) => {
-  res.send('AirCNC Server is running..')
+  res.send('Contacts Management  is running..')
 })
 
 app.listen(port, () => {
-  console.log(`AirCNC is running on port ${port}`)
+  console.log(`Contacts Management  ${port}`)
 })
