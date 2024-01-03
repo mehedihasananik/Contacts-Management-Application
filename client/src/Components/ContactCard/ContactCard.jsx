@@ -1,5 +1,6 @@
-import React, { useRef, useState } from "react";
-import Modal from "../Modal/Modal";
+/* eslint-disable react/prop-types */
+import React, { useRef } from "react";
+import toast from "react-hot-toast";
 
 const ContactCard = ({ _id, info, imageUrl, deleteItem }) => {
   const modalRef = useRef(null);
@@ -27,30 +28,31 @@ const ContactCard = ({ _id, info, imageUrl, deleteItem }) => {
       .then((data) => {
         console.log(data);
         if (data.modifiedCount > 0) {
-          alert("updated successfully");
+          toast.success("Contact updated successfully");
         }
       });
+    modalRef.current.close();
   };
 
   return (
-    <div className="card w-96 bg-base-100 shadow-xl">
+    <div className="card w-96 h-[90%] bg-base-100 shadow-xl pt-14">
       <figure>
-        <img src={imageUrl} alt="Shoes" />
+        <img className="w-full h-[300px]" src={imageUrl} alt="Shoes" />
       </figure>
       <div className="card-body">
         <div className="card-title">
-          <div> {info?.name}</div>
+          <div>Name: {info?.name}</div>
         </div>
-        <div className="badge badge-secondary">{info?.email}</div>
-        <div>{info?.phone}</div>
-        <div>{info?.address}</div>
+        <div>Email: {info?.email}</div>
+        <div>Phone: {info?.phone}</div>
+        <div>Address: {info?.address}</div>
         <div className="card-actions justify-end">
           <div className="">
             <button
               onClick={() => modalRef.current.showModal()}
-              className=" info_card text-white bg-red-500 font-semibold py-2 rounded-md"
+              className="badge  badge-secondary badge-outline font-bold mt-4"
             >
-              Admission Form
+              Update
             </button>
             <dialog
               ref={modalRef}
@@ -118,19 +120,6 @@ const ContactCard = ({ _id, info, imageUrl, deleteItem }) => {
                       defaultValue={info.address}
                     />
                   </div>
-                  <div className="form-control">
-                    <label className="label">
-                      <span className="label-text">Image </span>
-                    </label>
-                    <input
-                      name="image"
-                      type="image"
-                      placeholder="Your Image"
-                      className="input input-bordered"
-                      required
-                      defaultValue={imageUrl}
-                    />
-                  </div>
 
                   <div className="form-control mt-6">
                     <button type="submit" className="btn btn-primary">
@@ -141,8 +130,7 @@ const ContactCard = ({ _id, info, imageUrl, deleteItem }) => {
               </div>
             </dialog>
           </div>
-          <div className="badge badge-outline">
-            {" "}
+          <div className="badge badge-outline font-bold mt-4">
             <button onClick={() => deleteItem(_id)}>Delete</button>
           </div>
         </div>
