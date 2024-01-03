@@ -38,6 +38,8 @@ async function run() {
     });
 
 
+
+
     app.post("/contact", async (req, res) => {
       const data = req.body;
       const query = { data };
@@ -49,6 +51,20 @@ async function run() {
       const result = await contactCollection.insertOne(data);
 
       res.send({ success: true, result });
+    });
+    app.get("/contact/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const user = await contactCollection.findOne(query);
+      res.send(user);
+    });
+
+    app.delete("/contact/:id", async (req, res) => {
+      const id = req.params.id;
+      console.log("delete from", id);
+      const query = { _id: new ObjectId(id) };
+      const result = await contactCollection.deleteOne(query);
+      res.send(result);
     });
 
 

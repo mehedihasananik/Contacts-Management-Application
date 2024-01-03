@@ -19,30 +19,40 @@ const AddContacts = () => {
     const url = `https://api.imgbb.com/1/upload?key=${
       import.meta.env.VITE_IMGDB
     }`;
+
     const info = {
       name,
       email,
       phone,
       address,
-      url,
     };
-    console.log(info);
-    fetch("http://localhost:5000/contact", {
+
+    fetch(url, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(info),
+      body: formData,
     })
       .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        if (data.success === true) {
-          toast.success(`You have successfully submitted the form`);
-        } else {
-          toast.error("You already have an appoinment");
-        }
+      .then((imageData) => {
+        const imageUrl = imageData.data.display_url;
+        fetch("http://localhost:5000/contact", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ info, imageUrl }),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(data);
+            if (data.success === true) {
+              toast.success(`You have successfully submitted the form`);
+            } else {
+              toast.error("You already have an appoinment");
+            }
+          });
       });
+
+    console.log(info);
   };
 
   return (
